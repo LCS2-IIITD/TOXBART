@@ -54,11 +54,11 @@ def get_cosine_k_triples(k, cosine_scores, kg_vals, typ):
 def get_stereokg_edge_dict():
     edges = {}
     if not os.path.exists(f"{STEREO_EDGE_DICT_FILE_NAME}"):
-        df = pd.read_csv("../data/stereoKG.tsv")
+        df = pd.read_csv("../data/stereoKG.tsv", delimiter = "\t")
         for i in range(df.shape[0]):
-            start = df.iloc[i, 1]
-            rel = df.iloc[i, 2]
-            end = df.iloc[i, 3]
+            start = df.iloc[i, 0]
+            rel = df.iloc[i, 1]
+            end = df.iloc[i, 2]
             if start not in edges:
                 edges[start] = []
             edges[start].append([rel, end])

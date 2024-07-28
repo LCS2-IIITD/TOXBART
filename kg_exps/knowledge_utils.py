@@ -231,8 +231,7 @@ def add_ordered_k_tuples(posts, ordered_k_tuples, sep_token=SEP_TOKEN, kg = "con
             file.close()
     elif kg == "stereokg":
         print('stereokg')
-        df_stereokg = pd.read_csv("../data/stereoKG.tsv", delimiter = ",")
-        df_stereokg = df_stereokg.drop(columns = ["Unnamed: 0"])
+        df_stereokg = pd.read_csv("../data/stereoKG.tsv", delimiter = "\t")
         stereokg_vals = df_stereokg["linearised"].values
         post_cos_triple_mapping = {}
         for i, post in enumerate(tqdm(posts)):
@@ -253,36 +252,6 @@ def add_ordered_k_tuples(posts, ordered_k_tuples, sep_token=SEP_TOKEN, kg = "con
             with open(f"cosinescore_dumps/{ds}_{kg}_{knowledge_type}_k_{k}_dumps.pkl", "wb") as file:
                 pickle.dump(post_cos_triple_mapping, file)
             file.close()
-#         if not os.path.exists(f"cosinescore_dumps/{ds}_{kg}_{knowledge_type}_k_20_dumps.pkl"):
-#             df_stereokg = pd.read_csv("../data/stereoKG.tsv", delimiter = ",")
-#             df_stereokg = df_stereokg.drop(columns = ["Unnamed: 0"])
-#             stereokg_vals = df_stereokg["linearised"].values
-#             post_cos_triple_mapping = {}
-#             for i, post in enumerate(tqdm(posts)):
-#                 post_embeddings = get_post_embedding(post)
-#                 stereokg_embeddings = get_stereokg_embeddings(stereokg_vals)
-#                 cosine_scores = get_cosine_scores(post_embeddings, stereokg_embeddings)
-#                 stereokg_k_triples = get_cosine_k_triples(k = k, cosine_scores = cosine_scores, kg_vals = stereokg_vals, typ = knowledge_type)
-#                 # cosine_top_k_scores = cosine_scores[cosine_scores[:, 0].cpu().sort().indices.numpy()[::-1][:k].copy()]
-#                 edge_string = ''
-#                 for each in stereokg_k_triples:
-#                     edge_string += sep_token + each
-#                 posts[i]+=edge_string
-
-#                 if get_scores:
-#                     post_cos_triple_mapping[i] = (post, cosine_top_k_scores, stereokg_k_triples)
-            
-#             if get_scores:
-#                 with open(f"cosinescore_dumps/{ds}_{kg}_{knowledge_type}_k_{k}_dumps.pkl", "wb") as file:
-#                     pickle.dump(post_cos_triple_mapping, file)
-#                 file.close()
-#         else:
-#             with open(f"cosinescore_dumps/{ds}_{kg}_{knowledge_type}_k_20_dumps.pkl", "rb") as file:
-#                 post_cos_triple_mapping = pickle.load(file)
-#             file.close()
-            
-#             for i, post in enumerate(tqdm(posts)):
-#                 _, cosine_top_k_scores, stereokg_top_k_triples = post_cos_triple_mapping[i]
     else:
         raise ValueError("kg is supposed to be either 'conceptnet' or 'stereokg'.")
     return posts
@@ -319,7 +288,6 @@ def concat_top_k_tuples(
 
         ordered_k_tuples = collect_ordered_k_tuples(query_lists, query_dict, all_tuples, k=k, k_type = knowledge_type)
 
-    # print(ordered_k_tuples)
     posts = add_ordered_k_tuples(posts, ordered_k_tuples, sep_token, knowledge_graph, knowledge_type, k=k, get_scores=get_scores, ds=ds)
     
     new_df = df_post.copy()
