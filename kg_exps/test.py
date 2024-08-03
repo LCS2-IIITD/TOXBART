@@ -105,14 +105,16 @@ if __name__ == '__main__':
         df = clean_target(df, train=False, target_col = "implied_statement")
     
     if not os.path.exists(pickle_file):
-        print('processing edge file ...')
-        if not os.path.exists(EDGE_DICT_FILE):
-            edge_dict = process_edge_file(EDGE_DATA_FILE)
-            pickle.dump(edge_dict, open(EDGE_DICT_FILE, 'wb'))
-        else:
-            edge_dict = pickle.load(open(EDGE_DICT_FILE, 'rb'))
-
         emb_dict = None
+        edge_dict = None
+
+        if args.knowledge_graph == "conceptnet":
+            print('processing edge file ...')
+            if not os.path.exists(EDGE_DICT_FILE):
+                edge_dict = process_edge_file(EDGE_DATA_FILE)
+                pickle.dump(edge_dict, open(EDGE_DICT_FILE, 'wb'))
+            else:
+                edge_dict = pickle.load(open(EDGE_DICT_FILE, 'rb'))
 
         print('finding top k tuples ...')
         if args.dataset_type == 'sbic':
