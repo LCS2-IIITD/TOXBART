@@ -23,7 +23,7 @@ We suggest using `conda` to manage virtual environments and ease-of-access.
 Kindly go through the following instructions to download the required datasets:
 - **[SBIC](https://maartensap.com/social-bias-frames/index.html)**: Need to download from the attached link and place in the `data` directory.
 - **[LatentHatred](https://github.com/SALT-NLP/implicit-hate)**: Need to download from the attached link and place in the `data` directory, in addition to the already present data.
-- **[Jigsaw Unintended Bias](https://www.kaggle.com/c/jigsaw-unintende:d-bias-in-toxicity-classification)**: Need to download from the attached link and place in the `tox_bert/jigsaw-data` directory.
+- **[Jigsaw Unintended Bias](https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification)**: Need to download from the attached link and place in the `tox_bert/jigsaw-data` directory.
 - **[StereoKG](https://github.com/uds-lsv/StereoKG)**: Need to download from the attached link and place in the `data` directory.
 - **ConceptNet**: Use the following command `wget https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz` in the `data` directory. To unzip the file, use `gunzip conceptnet-assertions-5.7.0.csv.gz`.
 
