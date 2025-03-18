@@ -77,6 +77,8 @@ Here is a an approximate view of how the directories are structured in this repo
             └── train.py
 ```
 
+---
+
 ### Citing our work
 Kindly use the following bibtex to cite our work, thank you.
 ```bib
